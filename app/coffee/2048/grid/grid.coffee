@@ -81,13 +81,34 @@ class Grid
         debug 'Direction not handled', @, 'error'
         return
 
+    noTag = true
+    line = 0
+    while line < @matrix.height and noTag
+      column = 0
+      while column < @matrix.width and noTag
+        currentCase = @matrix.getAt column, line
+        noTag = currentCase.hasTag()
+        column += 1
+      line += 1
+
+    if noTag
+      return
 
     @generateRandomCaseValue()
 
     if @isGameOver()
       console.log "GAME OVER"
 
+    @removeCasesTags()
+
     @print()
+
+
+  removeCasesTags: ->
+    for i in [0...@matrix.height] by 1
+      for j in [0...@matrix.width] by 1
+        currentCase = @matrix.getAt j, i
+        currentCase.removeTags()
 
 
   moveLeft: ->

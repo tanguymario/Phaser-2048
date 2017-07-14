@@ -2,6 +2,7 @@ assert = require '../../utils/assert.coffee'
 debug       = require '../../utils/debug.coffee'
 debugThemes = require '../../utils/debug-themes.coffee'
 
+CaseTag = require './case-tag.coffee'
 Direction = require '../../utils/direction.coffee'
 Coordinates = require '../../utils/coordinates.coffee'
 
@@ -15,6 +16,7 @@ class Case
 
     @game = game
     @grid = grid
+    @tag = null
     @coords = gridCoords
     @value = Case.RESET_VALUE
 
@@ -34,6 +36,11 @@ class Case
 
   resetValue: ->
     @value = Case.RESET_VALUE
+    @removeTags()
+
+
+  hasTag: ->
+    return @tag?
 
 
   move: (direction) ->
@@ -44,18 +51,23 @@ class Case
 
     neighbourCase = @getNeighbourAt direction
     if not neighbourCase?
-      return
+      return false
 
     if neighbourCase.isEmpty()
       neighbourCase.value = @value
+      neighbourCase.tag = CaseTag.WAS_EMPTY
       @resetValue()
       neighbourCase.move direction
-      return
+      return true
 
-    if neighbourCase.value == @value
+    if neighbourCase.tag != CaseTag.ALREADY_ADD and neighbourCase.value == @value
       neighbourCase.value += @value
-      @resetValue()
-      return
+      neighbourCase.tag = CaseTag.ALREADY_ADD
+      return true
+
+
+  removeTags: ->
+    @tag = null
 
 
   getNeighbourAt: (direction) ->
