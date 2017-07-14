@@ -16,6 +16,7 @@ class Menu extends Phaser.State
 
   create: ->
     debug 'Create...', @, 'info', 30, debugThemes.Phaser
+    @state.start 'Game'
 
 
   update: ->
