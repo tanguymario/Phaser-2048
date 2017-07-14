@@ -30,7 +30,6 @@ class Player
 
 
   move: (direction) ->
-    console.log direction.toString()
     @grid.move direction
 
 
