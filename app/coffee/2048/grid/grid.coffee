@@ -87,7 +87,7 @@ class Grid
       column = 0
       while column < @matrix.width and noTag
         currentCase = @matrix.getAt column, line
-        noTag = currentCase.hasTag()
+        noTag = not currentCase.hasTag()
         column += 1
       line += 1
 
@@ -108,7 +108,7 @@ class Grid
     for i in [0...@matrix.height] by 1
       for j in [0...@matrix.width] by 1
         currentCase = @matrix.getAt j, i
-        currentCase.removeTags()
+        currentCase.removeTag()
 
 
   moveLeft: ->

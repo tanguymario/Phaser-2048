@@ -36,7 +36,7 @@ class Case
 
   resetValue: ->
     @value = Case.RESET_VALUE
-    @removeTags()
+    @removeTag()
 
 
   hasTag: ->
@@ -67,7 +67,7 @@ class Case
       return
 
 
-  removeTags: ->
+  removeTag: ->
     @tag = null
 
 
