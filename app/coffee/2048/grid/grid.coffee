@@ -144,6 +144,7 @@ class Grid
 
 
   print: ->
+    console.log "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
     console.log @toString()
 
 

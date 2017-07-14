@@ -51,19 +51,20 @@ class Case
 
     neighbourCase = @getNeighbourAt direction
     if not neighbourCase?
-      return false
+      return
 
     if neighbourCase.isEmpty()
       neighbourCase.value = @value
       neighbourCase.tag = CaseTag.WAS_EMPTY
       @resetValue()
       neighbourCase.move direction
-      return true
+      return
 
     if neighbourCase.tag != CaseTag.ALREADY_ADD and neighbourCase.value == @value
       neighbourCase.value += @value
       neighbourCase.tag = CaseTag.ALREADY_ADD
-      return true
+      @resetValue()
+      return
 
 
   removeTags: ->
