@@ -30,11 +30,11 @@ class Game extends Phaser.State
     pad1 = @game.input.gamepad.pad1
 
     # One grid, one player, one gamepad
-    grid = new Grid @game, GridConfig.normal
-    playerHuman1 = new PlayerHuman @game, grid,  PlayerHumanConfig.player1, pad1
+    grid1 = new Grid @game, GridConfig.normal
+    playerHuman1 = new PlayerHuman @game, PlayerHumanConfig.player1, pad1
 
     # Game creation
-    game2048 = new Game2048 @game, playerHuman1
+    game2048 = new Game2048 @game, playerHuman1, grid1
 
 
 module.exports = Game

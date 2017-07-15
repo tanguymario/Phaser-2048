@@ -64,6 +64,7 @@ class Case
       neighbourCase.value += @value
       neighbourCase.tag = CaseTag.ALREADY_ADD
       @resetValue()
+      @grid.onCaseAddition()
       return
 
 

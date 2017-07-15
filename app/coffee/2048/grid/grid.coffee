@@ -25,10 +25,14 @@ class Grid
         tab[i][j] = new Case @game, @, caseCoords
 
     @matrix = new Matrix tab, false
+    @nbCases = @matrix.width * @matrix.height
+    @nbCasesFull = 0
 
     # At start we generate 2 random values from the start values
     for i in [0...@config.nbCasesAtStart]
       @generateRandomCaseValue()
+
+    @hasChanged = false
 
     @print()
 
@@ -39,6 +43,7 @@ class Grid
       currentCase = @getRandomCase()
 
     currentCase.value = @generateCaseValue()
+    @nbCasesFull += 1
 
 
   generateCaseValue: ->
@@ -51,16 +56,6 @@ class Grid
     return @matrix.getAt column, line
 
 
-  isGameOver: ->
-    for i in [0...@matrix.height] by 1
-      for j in [0...@matrix.width] by 1
-        currentCase = @matrix.getAt j, i
-        if currentCase.isEmpty()
-          return false
-
-    return true
-
-
   getCaseAtGridCoords: (coords) ->
     assert coords instanceof Coordinates, "Coords missing"
 
@@ -71,7 +66,30 @@ class Grid
     return null
 
 
+  onCaseAddition: ->
+    @nbCasesFull -= 1
+
+
+  isOver: ->
+    if @nbCasesFull < @nbCases
+      return false
+
+    directions = [ Direction.W, Direction.N, Direction.E, Direction.S ]
+    for i in [0...@matrix.height] by 1
+      for j in [0...@matrix.width] by 1
+        currentCase = @matrix.getAt j, i
+        for direction in directions
+          neighbourCase = currentCase.getNeighbourAt direction
+          if neighbourCase?
+            if neighbourCase.value == currentCase.value
+              return false
+
+    return true
+
+
   move: (direction) ->
+    @hasChanged = false
+
     switch direction
       when Direction.W then @moveLeft()
       when Direction.N then @moveUp()
@@ -94,10 +112,9 @@ class Grid
     if noTag
       return
 
-    @generateRandomCaseValue()
+    @hasChanged = true
 
-    if @isGameOver()
-      console.log "GAME OVER"
+    @generateRandomCaseValue()
 
     @removeCasesTags()
 

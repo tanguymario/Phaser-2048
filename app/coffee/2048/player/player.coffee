@@ -5,12 +5,14 @@ debugThemes = require '../../utils/debug-themes.coffee'
 Direction = require '../../utils/direction.coffee'
 
 class Player
-  constructor: (game, grid) ->
+  constructor: (game) ->
     assert game?, "Game missing"
-    assert grid?, "Grid missing"
 
     @game = game
-    @grid = grid
+
+
+  destroy: ->
+    # Abstract
 
 
   moveLeft: ->
@@ -30,7 +32,7 @@ class Player
 
 
   move: (direction) ->
-    @grid.move direction
+    debug 'Game 2048 must reference this move function to the grid', @, 'info'
 
 
 module.exports = Player

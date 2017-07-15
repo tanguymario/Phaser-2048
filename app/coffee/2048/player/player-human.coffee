@@ -11,8 +11,8 @@ class PlayerHuman extends Player
   @I_GAMEPAD_MOVE_RIGHT = Phaser.Gamepad.XBOX360_DPAD_RIGHT
   @I_GAMEPAD_MOVE_DOWN = Phaser.Gamepad.XBOX360_DPAD_DOWN
 
-  constructor: (game, grid, config, gamepad = null) ->
-    super game, grid
+  constructor: (game, config, gamepad = null) ->
+    super game
 
     assert config?, "Config missing"
 
@@ -51,6 +51,15 @@ class PlayerHuman extends Player
 
   gamepadOnUpHandler: (button) =>
     # Nothing to do
+
+
+  destroy: ->
+    super
+
+    
+
+    if @gamepad?
+      @gamepad.destroy()
 
 
   gamepadOnDownHandler: (button) =>
